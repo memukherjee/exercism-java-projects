@@ -4,33 +4,33 @@ import java.util.List;
 
 class PrimeCalculator {
     static List<Integer> primes = new ArrayList<>();
-    static int MAX_SIZE = 150000;
+    static int MAXIMUM_POSSIBLE_PRIME_NUMBER = 150000;
 
     static {
         sieveOfEratosthenes();
     }
 
     private static void sieveOfEratosthenes() {
-        boolean[] isPrime = new boolean[MAX_SIZE];
+        boolean[] isPrime = new boolean[MAXIMUM_POSSIBLE_PRIME_NUMBER];
         Arrays.fill(isPrime, true);
-        for(int i=2;i*i<MAX_SIZE;i++){
-            if(!isPrime[i])
+        for(int number = 2; number*number< MAXIMUM_POSSIBLE_PRIME_NUMBER; number++){
+            if(!isPrime[number])
                 continue;
-            for(int j=i*i; j<MAX_SIZE; j+=i){
-                isPrime[j] = false;
+            for(int multipleOfTheNumber = number*number; multipleOfTheNumber< MAXIMUM_POSSIBLE_PRIME_NUMBER; multipleOfTheNumber+=number){
+                isPrime[multipleOfTheNumber] = false;
             }
         }
-        for(int i=2; i<MAX_SIZE; i++){
-            if (isPrime[i])
-                primes.add(i);
+        for(int number = 2; number < MAXIMUM_POSSIBLE_PRIME_NUMBER; number++){
+            if (isPrime[number])
+                primes.add(number);
         }
 
     }
 
-    int nth(int nth) {
-        if(nth<1)
+    int findNthPrime(int nthIndex) {
+        if(nthIndex<1)
             throw new IllegalArgumentException();
-        return primes.get(nth-1);
+        return primes.get(nthIndex-1);
     }
 
 }
