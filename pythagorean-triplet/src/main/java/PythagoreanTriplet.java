@@ -3,45 +3,38 @@ import java.util.List;
 import java.util.Objects;
 
 class PythagoreanTriplet {
-    int a,b,c;
-    PythagoreanTriplet(int a, int b, int c) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
+    int oppositeSide, adjacentSide, hypotenuseSide;
+    PythagoreanTriplet(int oppositeSide, int adjacentSide, int hypotenuseSide) {
+        this.oppositeSide = oppositeSide;
+        this.adjacentSide = adjacentSide;
+        this.hypotenuseSide = hypotenuseSide;
     }
 
     @Override
-    public String toString() {
-        return "PythagoreanTriplet{" +
-                "a=" + a +
-                ", b=" + b +
-                ", c=" + c +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PythagoreanTriplet that = (PythagoreanTriplet) o;
-        return a == that.a && b == that.b && c == that.c;
+    public boolean equals(Object comparedObject) {
+        if (this == comparedObject) return true;
+        if (comparedObject == null || getClass() != comparedObject.getClass()) return false;
+        PythagoreanTriplet that = (PythagoreanTriplet) comparedObject;
+        return this.oppositeSide == that.oppositeSide &&
+                this.adjacentSide == that.adjacentSide &&
+                this.hypotenuseSide == that.hypotenuseSide;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(a, b, c);
+        return Objects.hash(oppositeSide, adjacentSide, hypotenuseSide);
     }
-
-    static TripletListBuilder makeTripletsList() {
+    
+    static TripletListBuilder getTripletListBuilder() {
         return new TripletListBuilder();
     }
 
     static class TripletListBuilder {
-        int sum, maxFactor;
-        TripletListBuilder thatSumTo(int sum) {
-            this.sum = sum;
+        int sumOfTheSides, maxFactor;
+        TripletListBuilder thatSumTo(int sumOfTheSides) {
+            this.sumOfTheSides = sumOfTheSides;
             if(maxFactor==0)
-                maxFactor = sum;
+                maxFactor = sumOfTheSides;
             return this;
         }
 
@@ -50,15 +43,15 @@ class PythagoreanTriplet {
             return this;
         }
 
-        List<PythagoreanTriplet> build() {
+        List<PythagoreanTriplet> buildTriplets() {
             List<PythagoreanTriplet> triplets = new ArrayList<>();
-            for(int i=1; i<=sum/3; i++) {
-                for(int j=i+1; j<=sum/2; j++){
-                    int k = sum-i-j;
-                    if(k>maxFactor)
+            for(int oppositeSide = 1; oppositeSide<= sumOfTheSides/3; oppositeSide++) {
+                for(int adjacentSide = oppositeSide+1; adjacentSide<= sumOfTheSides/2; adjacentSide++){
+                    int hypotenuseSide = sumOfTheSides - oppositeSide - adjacentSide;
+                    if(hypotenuseSide > maxFactor)
                         continue;
-                    if(i*i+j*j == k*k) {
-                        triplets.add(new PythagoreanTriplet(i, j, k));
+                    if(oppositeSide*oppositeSide+adjacentSide*adjacentSide == hypotenuseSide*hypotenuseSide) {
+                        triplets.add(new PythagoreanTriplet(oppositeSide, adjacentSide, hypotenuseSide));
                     }
                 }
             }
