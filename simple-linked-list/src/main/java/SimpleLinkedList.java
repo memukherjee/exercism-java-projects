@@ -1,6 +1,4 @@
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 class SimpleLinkedList<T> {
@@ -22,8 +20,8 @@ class SimpleLinkedList<T> {
     }
 
     SimpleLinkedList(T[] values) {
-        for(T e: values) {
-            push(e);
+        for(T value: values) {
+            push(value);
         }
     }
 
@@ -38,9 +36,9 @@ class SimpleLinkedList<T> {
     T pop() {
         if(head==null)
             throw new NoSuchElementException();
-        T value = head.value;
+        T poppedValue = head.value;
         head = head.next;
-        return value;
+        return poppedValue;
     }
 
     void reverse() {
@@ -59,22 +57,22 @@ class SimpleLinkedList<T> {
     T[] asArray(Class<T> className) {
         int listSize = size();
         @SuppressWarnings("unchecked")
-        T[] list = (T[]) Array.newInstance(className,listSize);
+        T[] arrayRepresentation = (T[]) Array.newInstance(className,listSize);
         Node<T> iterator = head;
-        for(int i=0; i<listSize; i++){
-            list[i] = iterator.value;
+        for(int index=0; index<listSize; index++){
+            arrayRepresentation[index] = iterator.value;
             iterator = iterator.next;
         }
-        return list;
+        return arrayRepresentation;
     }
 
     int size() {
         Node<T> iterator = head;
-        int count = 0;
+        int countOfNodes = 0;
         while(iterator != null) {
             iterator = iterator.next;
-            count++;
+            countOfNodes++;
         }
-        return count;
+        return countOfNodes;
     }
 }
